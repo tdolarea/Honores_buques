@@ -151,9 +151,9 @@
   <!-- Reproductores de audio estáticos predefinidos para Portalón -->
 
   <!-- Reproductores estáticos para Honores entre Buques -->
-  <audio id="audBuqueBabor" src="audio/Honoresporbabor_AudioDenoise.mp3" preload="auto" playsinline></audio>
-  <audio id="audBuqueEstribor" src="audio/Honoresporestribor_AudioDenoise.mp3" preload="auto" playsinline></audio>
-  <audio id="audBuqueRetirada" src="audio/Retiradadehonores_AudioDenoise.mp3" preload="auto" playsinline></audio>
+  <audio id="audBuqueBaborHEB" src="audio/Honoresporbabor_AudioDenoise.mp3" preload="auto" playsinline></audio>
+  <audio id="audBuqueEstriborHEB" src="audio/Honoresporestribor_AudioDenoise.mp3" preload="auto" playsinline></audio>
+  <audio id="audBuqueRetiradaHEB" src="audio/Retiradadehonores_AudioDenoise.mp3" preload="auto" playsinline></audio>
 
   <audio id="audMando" src="audio/ComteoAlmte.mp3" preload="auto" playsinline></audio>
   <audio id="audOficiales" src="audio/oficiales.mp3" preload="auto" playsinline></audio>
@@ -226,18 +226,18 @@
         <!-- CUADRÍCULA DE 2 COLUMNAS A LA MISMA ALTURA: BABOR (ROJO) Y ESTRIBOR (VERDE) -->
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
           <!-- BABOR (ROJO, IZQUIERDA, DOBLE ALTURA) -->
-          <button class="action-btn" id="btnBuqueBabor" 
+          <button class="action-btn" id="btnBuqueBaborHEB" 
             style="background:#7f1d1d; border:2px solid #ef4444; color:#fee2e2; min-height:120px; flex-direction:column; justify-content:center; gap:8px; text-align:center; padding:12px;" 
-            onclick="tocarHonoresBabor()">
+            onclick="tocarHonoresBaborHEB()">
             <span style="font-size:24px;">🔴</span>
             <span style="font-size:14px; font-weight:800; line-height:1.2;">HONORES POR<br>BABOR</span>
             
           </button>
 
           <!-- ESTRIBOR (VERDE, DERECHA, DOBLE ALTURA) -->
-          <button class="action-btn" id="btnBuqueEstribor" 
+          <button class="action-btn" id="btnBuqueEstriborHEB" 
             style="background:#064e3b; border:2px solid #10b981; color:#d1fae5; min-height:120px; flex-direction:column; justify-content:center; gap:8px; text-align:center; padding:12px;" 
-            onclick="tocarHonoresEstribor()">
+            onclick="tocarHonoresEstriborHEB()">
             <span style="font-size:24px;">🟢</span>
             <span style="font-size:14px; font-weight:800; line-height:1.2;">HONORES POR<br>ESTRIBOR</span>
             
@@ -246,9 +246,9 @@
 
         <!-- BOTÓN RETIRADA DE HONORES (ANCHO COMPLETO, BLOQUEADO HASTA TOCAR BR O ER) -->
         <div style="margin-top:6px;">
-          <button class="action-btn primary disabled" id="btnBuqueRetirada" 
+          <button class="action-btn primary disabled" id="btnBuqueRetiradaHEB" 
             style="padding:16px; width:100%; justify-content:space-between;" 
-            onclick="tocarHonoresRetirada()">
+            onclick="tocarHonoresRetiradaHEB()">
             <span style="font-size:14px; font-weight:700;">🎺 RETIRADA DE HONORES</span>
             
           </button>
@@ -445,9 +445,9 @@
         document.getElementById('audOficiales'),
         document.getElementById('audRetirada'),
         document.getElementById('audGeneral'),
-        document.getElementById('audBuqueBabor'),
-        document.getElementById('audBuqueEstribor'),
-        document.getElementById('audBuqueRetirada')
+        document.getElementById('audBuqueBaborHEB'),
+        document.getElementById('audBuqueEstriborHEB'),
+        document.getElementById('audBuqueRetiradaHEB')
       ];
       allAudios.forEach(a => {
         if (a) {
@@ -455,8 +455,8 @@
         }
       });
       onAudioTerminado();
-      if (typeof onBuqueAudioFin === 'function') {
-        onBuqueAudioFin();
+      if (typeof onBuqueAudioFinHEB === 'function') {
+        onBuqueAudioFinHEB();
       }
     }
 
@@ -636,52 +636,52 @@ function _legacy_execAuth() {
     // ==========================================
     // LÓGICA HONORES ENTRE BUQUES (ENCLAVAMIENTO CEREMONIAL)
     // ==========================================
-    const audBuqueBabor = document.getElementById('audBuqueBabor');
-    const audBuqueEstribor = document.getElementById('audBuqueEstribor');
-    const audBuqueRetirada = document.getElementById('audBuqueRetirada');
+    const audBuqueBaborHEB = document.getElementById('audBuqueBaborHEB');
+    const audBuqueEstriborHEB = document.getElementById('audBuqueEstriborHEB');
+    const audBuqueRetiradaHEB = document.getElementById('audBuqueRetiradaHEB');
 
-    let buqueHonorTocado = false; // true si se ha tocado BR o ER
-    let buqueSonidoEnCurso = false;
+    let buqueHonorTocadoHEB = false; // true si se ha tocado BR o ER
+    let buqueSonidoEnCursoHEB = false;
 
-    [audBuqueBabor, audBuqueEstribor, audBuqueRetirada].forEach(a => {
+    [audBuqueBaborHEB, audBuqueEstriborHEB, audBuqueRetiradaHEB].forEach(a => {
       if (a) {
-        a.onended = () => { onBuqueAudioFin(); };
-        a.onerror = () => { onBuqueAudioFin(); };
+        a.onended = () => { onBuqueAudioFinHEB(); };
+        a.onerror = () => { onBuqueAudioFinHEB(); };
       }
     });
 
-    function onBuqueAudioFin() {
+    function onBuqueAudioFinHEB() {
       const statusBox = document.getElementById('audioStatusBar');
       if (statusBox) statusBox.style.display = 'none';
-      buqueSonidoEnCurso = false;
-      actualizarEstadoBuques();
+      buqueSonidoEnCursoHEB = false;
+      actualizarEstadoBuquesHEB();
     }
 
-    function tocarHonoresBabor() {
-      if (buqueSonidoEnCurso || buqueHonorTocado) return;
-      buqueSonidoEnCurso = true;
-      buqueHonorTocado = true;
-      bloquearTodosBotonesBuques();
-      reproducirAudioBuque(audBuqueBabor, 'HONORES POR BABOR');
+    function tocarHonoresBaborHEB() {
+      if (buqueSonidoEnCursoHEB || buqueHonorTocadoHEB) return;
+      buqueSonidoEnCursoHEB = true;
+      buqueHonorTocadoHEB = true;
+      bloquearTodosBotonesBuquesHEB();
+      reproducirAudioBuqueHEB(audBuqueBaborHEB, 'HONORES POR BABOR');
     }
 
-    function tocarHonoresEstribor() {
-      if (buqueSonidoEnCurso || buqueHonorTocado) return;
-      buqueSonidoEnCurso = true;
-      buqueHonorTocado = true;
-      bloquearTodosBotonesBuques();
-      reproducirAudioBuque(audBuqueEstribor, 'HONORES POR ESTRIBOR');
+    function tocarHonoresEstriborHEB() {
+      if (buqueSonidoEnCursoHEB || buqueHonorTocadoHEB) return;
+      buqueSonidoEnCursoHEB = true;
+      buqueHonorTocadoHEB = true;
+      bloquearTodosBotonesBuquesHEB();
+      reproducirAudioBuqueHEB(audBuqueEstriborHEB, 'HONORES POR ESTRIBOR');
     }
 
-    function tocarHonoresRetirada() {
-      if (buqueSonidoEnCurso || !buqueHonorTocado) return;
-      buqueSonidoEnCurso = true;
-      bloquearTodosBotonesBuques();
-      reproducirAudioBuque(audBuqueRetirada, 'RETIRADA DE HONORES');
-      buqueHonorTocado = false; // Consumada la retirada, el ciclo se reinicia
+    function tocarHonoresRetiradaHEB() {
+      if (buqueSonidoEnCursoHEB || !buqueHonorTocadoHEB) return;
+      buqueSonidoEnCursoHEB = true;
+      bloquearTodosBotonesBuquesHEB();
+      reproducirAudioBuqueHEB(audBuqueRetiradaHEB, 'RETIRADA DE HONORES');
+      buqueHonorTocadoHEB = false; // Consumada la retirada, el ciclo se reinicia
     }
 
-    function reproducirAudioBuque(audioEl, label) {
+    function reproducirAudioBuqueHEB(audioEl, label) {
       stopAllAudio();
       const statusBox = document.getElementById('audioStatusBar');
       const statusText = document.getElementById('audioStatusText');
@@ -691,28 +691,28 @@ function _legacy_execAuth() {
       if (audioEl) {
         audioEl.currentTime = 0;
         audioEl.play().catch(e => {
-          console.error('Error reproducirAudioBuque:', e);
-          onBuqueAudioFin();
+          console.error('Error reproducirAudioBuqueHEB:', e);
+          onBuqueAudioFinHEB();
         });
       }
     }
 
-    function bloquearTodosBotonesBuques() {
-      const btnBR = document.getElementById('btnBuqueBabor');
-      const btnER = document.getElementById('btnBuqueEstribor');
-      const btnRet = document.getElementById('btnBuqueRetirada');
+    function bloquearTodosBotonesBuquesHEB() {
+      const btnBR = document.getElementById('btnBuqueBaborHEB');
+      const btnER = document.getElementById('btnBuqueEstriborHEB');
+      const btnRet = document.getElementById('btnBuqueRetiradaHEB');
       if (btnBR) { btnBR.classList.add('disabled'); btnBR.disabled = true; }
       if (btnER) { btnER.classList.add('disabled'); btnER.disabled = true; }
       if (btnRet) { btnRet.classList.add('disabled'); btnRet.disabled = true; }
     }
 
-    function actualizarEstadoBuques() {
-      const btnBR = document.getElementById('btnBuqueBabor');
-      const btnER = document.getElementById('btnBuqueEstribor');
-      const btnRet = document.getElementById('btnBuqueRetirada');
-      const badge = document.getElementById('badgeBuqueRetirada');
+    function actualizarEstadoBuquesHEB() {
+      const btnBR = document.getElementById('btnBuqueBaborHEB');
+      const btnER = document.getElementById('btnBuqueEstriborHEB');
+      const btnRet = document.getElementById('btnBuqueRetiradaHEB');
+      const badge = document.getElementById('badgeBuqueRetiradaHEB');
 
-      if (buqueHonorTocado) {
+      if (buqueHonorTocadoHEB) {
         // Se ha tocado Babor o Estribor: se desactivan los dos honores y se activa Retirada
         if (btnBR) { btnBR.classList.add('disabled'); btnBR.disabled = true; }
         if (btnER) { btnER.classList.add('disabled'); btnER.disabled = true; }
