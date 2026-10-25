@@ -1,4 +1,4 @@
-// SW Honores Buques PWA v1792951764
+// SW Honores Buques Monomódulo 1792951947
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => {
   e.waitUntil(
