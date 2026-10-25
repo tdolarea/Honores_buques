@@ -92,7 +92,7 @@
       <img src="img/banderaespana.jpg" alt="Armada Española">
       <div>
         <div class="brand-title">Honores entre Buques</div>
-        <div class="brand-sub">PWA Web App · Armada Española</div>
+        <div class="brand-sub">PWA Web App</div>
       </div>
     </div>
   </header>
@@ -105,22 +105,18 @@
 
     <div class="view-section active" id="viewBuques">
       <div class="card">
-        <div class="card-title">⚓ Saludo al Buque (Babor / Estribor)</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
           <button type="button" id="btnBuqueBaborHEB" class="action-btn babor" onclick="tocarHonoresBaborHEB()">
             <span class="action-btn-title">🔴 BABOR</span>
-            <span class="action-btn-sub">Atención Babor</span>
-          </button>
+            </button>
           <button type="button" id="btnBuqueEstriborHEB" class="action-btn estribor" onclick="tocarHonoresEstriborHEB()">
             <span class="action-btn-title">🟢 ESTRIBOR</span>
-            <span class="action-btn-sub">Atención Estribor</span>
-          </button>
+            </button>
         </div>
 
         <button type="button" id="btnBuqueRetiradaHEB" class="action-btn primary disabled" disabled onclick="tocarHonoresRetiradaHEB()">
-          <span class="action-btn-title">🎺 RETIRADA</span>
-          <span class="action-btn-sub">Retirada de honores (Ambas bandas)</span>
-        </button>
+          <span class="action-btn-title">🎺 RETIRADA DE HONORES</span>
+          </button>
       </div>
     </div>
   </main>
@@ -135,7 +131,7 @@
   <audio id="audBuqueRetiradaHEB" src="audio/Retiradadehonores_AudioDenoise.mp3" preload="auto" playsinline></audio>
 
   <script>
-    const APP_VERSION = 'v1792951947';
+    const APP_VERSION = 'v1792952236';
 
     const audBuqueBaborHEB = document.getElementById('audBuqueBaborHEB');
     const audBuqueEstriborHEB = document.getElementById('audBuqueEstriborHEB');
